@@ -178,7 +178,7 @@ ftm_independent_ch_param_t flexTimer_pwm_1_IndependentChannelsConfig[1] =
     {
         1, /* Hardware channel Id */
         FTM_POLARITY_HIGH, /* Polarity of the PWM signal */
-		2500U, /* Duty cycle percent 0-0x8000 */
+		3000U, /* Duty cycle percent 0-0x8000 */
         false, /* External Trigger */
         FTM_LOW_STATE, /* Safe state of the PWM channel when faults are detected */
         false, /* Enabled/disabled the channel (n+1) output */

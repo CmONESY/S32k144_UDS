@@ -36,7 +36,8 @@ int main(void)
 	PINS_DRV_WritePin(LED_GREEN_PORT,LED_GREEN_PIN,1);
 	for(;;)
     {
-		send();
+		//send();
+		sg90();
 //		if((PINS_DRV_ReadPins(KEY1_PORT) & (1U << KEY1_PIN)) == 0U)
 //		{
 //			PINS_DRV_WritePin(LED_BLUE_PORT,LED_BLUE_PIN,0);

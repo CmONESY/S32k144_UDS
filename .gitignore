@@ -1,4 +1,7 @@
 # Prerequisites
+/Debug*/
+/Release*/
+
 *.d
 
 # Object files

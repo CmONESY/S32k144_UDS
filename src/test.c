@@ -89,7 +89,27 @@ void pwm_init(void)
 	FTM_DRV_Init(INST_FLEXTIMER_PWM_1,&flexTimer_pwm_1_InitConfig, &ftmstate);
 	FTM_DRV_InitPwm(INST_FLEXTIMER_PWM_1, &flexTimer_pwm_1_PwmConfig);
 }
-
+void sweep(bool direction)
+{
+	if(direction)
+	{
+		PINS_DRV_WritePin(LED_GREEN_PORT,LED_GREEN_PIN,1);
+		FTM_DRV_UpdatePwmChannel(INST_FLEXTIMER_PWM_1, 1, FTM_PWM_UPDATE_IN_TICKS, Pluse_forward, 0,true);
+	}
+	else
+	{
+		PINS_DRV_WritePin(LED_GREEN_PORT,LED_GREEN_PIN,0);
+		FTM_DRV_UpdatePwmChannel(INST_FLEXTIMER_PWM_1, 1, FTM_PWM_UPDATE_IN_TICKS, Pluse_backward, 0,true);
+	}
+}
+void sg90(void)
+{
+	if(PINS_DRV_ReadPins(KEY5_PORT)&(1<<KEY5_PIN))
+	{
+		sweep(1);
+	}
+	else sweep(0);
+}
 
 
 
