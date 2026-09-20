@@ -457,7 +457,7 @@
                                  <setting name="hardwareTrigger1" value="false"/>
                                  <setting name="hardwareTrigger2" value="false"/>
                                  <setting name="hardwareTrigger3" value="false"/>
-                                 <setting name="ftmSyncPoint" value="FTM_WAIT_LOADING_POINTS"/>
+                                 <setting name="ftmSyncPoint" value="FTM_UPDATE_NOW"/>
                                  <setting name="maxload" value="false"/>
                                  <setting name="minload" value="false"/>
                                  <setting name="AutoTrigClear" value="false"/>

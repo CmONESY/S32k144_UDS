@@ -54,7 +54,7 @@ instance:
           - hardwareTrigger1: 'false'
           - hardwareTrigger2: 'false'
           - hardwareTrigger3: 'false'
-          - ftmSyncPoint: 'FTM_WAIT_LOADING_POINTS'
+          - ftmSyncPoint: 'FTM_UPDATE_NOW'
           - maxload: 'false'
           - minload: 'false'
           - AutoTrigClear: 'false'
@@ -131,7 +131,7 @@ ftm_user_config_t flexTimer_pwm_1_InitConfig =
         FTM_PWM_SYNC, /* Update mode for OUTMASK register */
         FTM_PWM_SYNC, /* Update mode for CNTIN register */
         true, /* Automatic clear of the trigger*/
-        FTM_WAIT_LOADING_POINTS, /* Synchronization point */
+        FTM_UPDATE_NOW, /* Synchronization point */
     },
     FTM_MODE_EDGE_ALIGNED_PWM, /* Mode of operation for FTM */
     FTM_CLOCK_DIVID_BY_32, /* FTM clock prescaler */
@@ -178,7 +178,7 @@ ftm_independent_ch_param_t flexTimer_pwm_1_IndependentChannelsConfig[1] =
     {
         1, /* Hardware channel Id */
         FTM_POLARITY_HIGH, /* Polarity of the PWM signal */
-		3000U, /* Duty cycle percent 0-0x8000 */
+        2458U, /* Duty cycle percent 0-0x8000 */
         false, /* External Trigger */
         FTM_LOW_STATE, /* Safe state of the PWM channel when faults are detected */
         false, /* Enabled/disabled the channel (n+1) output */
