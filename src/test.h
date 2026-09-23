@@ -17,7 +17,8 @@
 #define LED_GREEN_PORT PTD
 #define LED_RED_PORT PTD
 #define LED_YELLOW_PORT PTD
-
+extern volatile uint16_t count;
+extern volatile status_t pwm_update_status;
 #define LED_BLUE_PIN 16U
 #define LED_GREEN_PIN 15U
 #define LED_RED_PIN 1U
@@ -29,4 +30,6 @@ extern unsigned char rec_buf[5][10];
 void uart_receive(void *drivestate,uart_event_t event,void *userData);
 void lpuart_init(void);
 void pwm_init(void);
+status_t sweep(bool direction);
+void sg90(void);
 #endif

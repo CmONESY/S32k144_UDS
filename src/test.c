@@ -10,6 +10,8 @@ unsigned char *send4="LPUART1 Recepted! \n";
 volatile uint8_t ready_to_send1=0;
 volatile uint8_t ready_to_send2=0;
 ftm_state_t ftmstate;
+volatile uint16_t count=0;
+volatile status_t pwm_update_status=STATUS_SUCCESS;
 void init(void)
 {
 	CLOCK_SYS_Init(g_clockManConfigsArr,CLOCK_MANAGER_CONFIG_CNT,
@@ -20,10 +22,12 @@ void init(void)
 
 void lpit0(void)
 {
+	count++;
 	LPIT_DRV_ClearInterruptFlagTimerChannels(INST_LPIT_CONFIG_1, 0X01U);
 	PINS_DRV_TogglePins(LED_YELLOW_PORT,1<<LED_YELLOW_PIN);
-	LPUART_DRV_SendData(INST_LPUART_1,(const uint8_t *)send1, strlen(send1));
-	LPUART_DRV_SendData(INST_LPUART_2,(const uint8_t *)send2, strlen(send2));
+//	LPUART_DRV_SendData(INST_LPUART_1,(const uint8_t *)send1, strlen(send1));
+//	LPUART_DRV_SendData(INST_LPUART_2,(const uint8_t *)send2, strlen(send2));
+
 }
 void lpit_init(void)
 {
@@ -89,7 +93,29 @@ void pwm_init(void)
 	FTM_DRV_Init(INST_FLEXTIMER_PWM_1,&flexTimer_pwm_1_InitConfig, &ftmstate);
 	FTM_DRV_InitPwm(INST_FLEXTIMER_PWM_1, &flexTimer_pwm_1_PwmConfig);
 }
-
+status_t sweep(bool direction)
+{
+	if(direction)
+	{
+		pwm_update_status=FTM_DRV_UpdatePwmChannel(INST_FLEXTIMER_PWM_1, flexTimer_pwm_1_IndependentChannelsConfig[0].hwChannelId
+				,FTM_PWM_UPDATE_IN_DUTY_CYCLE, 3277U, 0U, true);
+	}
+	else
+	{
+		pwm_update_status=FTM_DRV_UpdatePwmChannel(INST_FLEXTIMER_PWM_1, flexTimer_pwm_1_IndependentChannelsConfig[0].hwChannelId
+						,FTM_PWM_UPDATE_IN_DUTY_CYCLE, 1638U, 0U, true);
+	}
+	PINS_DRV_WritePin(LED_RED_PORT, LED_RED_PIN, pwm_update_status == STATUS_SUCCESS ? direction : 1U);
+	return pwm_update_status;
+}
+void sg90(void)
+{
+	if(PINS_DRV_ReadPins(KEY5_PORT)&(1<<KEY5_PIN))
+	{
+		sweep(1);
+	}
+	else sweep(0);
+}
 
 
 
