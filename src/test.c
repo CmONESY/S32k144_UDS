@@ -1,6 +1,7 @@
 #include "test.h"
 #include "string.h"
 #include "interrupt_manager.h"
+#include <sdk_project_config.h>
 unsigned char rec_buf1[5];
 unsigned char rec_buf2[5];
 unsigned char *send1="sssss";
@@ -9,9 +10,41 @@ unsigned char *send3="LPUAER0 Recepted! \n";
 unsigned char *send4="LPUART1 Recepted! \n";
 volatile uint8_t ready_to_send1=0;
 volatile uint8_t ready_to_send2=0;
+volatile uint8_t led_sel=0,dir=0;
 ftm_state_t ftmstate;
 volatile uint16_t count=0;
 volatile status_t pwm_update_status=STATUS_SUCCESS;
+#define LIGHT_NUM   5U      /* light1 ~ light5 */
+#define LIGHT_ON    1U      /* 低电平点亮；如果是高电平点亮，把这两个值对调 */
+#define LIGHT_OFF   0U
+
+/* 只点亮 idx 对应的那一盏，其余全灭 */
+static void light_show(uint8_t idx)
+{
+	static GPIO_Type * const light_port[LIGHT_NUM] = {light1_PORT, light2_PORT, light3_PORT, light4_PORT, light5_PORT};
+	static const uint16_t   light_pin[LIGHT_NUM]   = {light1_PIN,  light2_PIN,  light3_PIN,  light4_PIN,  light5_PIN};
+	uint8_t i;
+
+	for(i = 0U; i < LIGHT_NUM; i++)
+	{
+		PINS_DRV_WritePin(light_port[i], light_pin[i], (i == idx) ? LIGHT_ON : LIGHT_OFF);
+	}
+}
+
+void led(void)
+{
+	static uint8_t light_idx = LIGHT_NUM;   /* LIGHT_NUM 表示还没点灯，第一次按下从 light1 开始 */
+	static uint8_t key_last  = 1U;          /* 上一次按键电平，1 = 松开 */
+	uint8_t key_now = ((PINS_DRV_ReadPins(KEY5_PORT) & (1U << KEY5_PIN)) != 0U) ? 1U : 0U;
+
+	if((key_last != 0U) && (key_now == 0U))  /* 下降沿：按一下 */
+	{
+		light_idx = (light_idx >= (LIGHT_NUM - 1U)) ? 0U : (uint8_t)(light_idx + 1U);  /* 最后再回到 light1 */
+		light_show(light_idx);
+	}
+
+	key_last = key_now;
+}
 void init(void)
 {
 	CLOCK_SYS_Init(g_clockManConfigsArr,CLOCK_MANAGER_CONFIG_CNT,
@@ -90,6 +123,7 @@ void lpuart_init(void)
 }
 void pwm_init(void)
 {
+	flexTimer_pwm_1_InitConfig.syncMethod.syncPoint=FTM_UPDATE_NOW;
 	FTM_DRV_Init(INST_FLEXTIMER_PWM_1,&flexTimer_pwm_1_InitConfig, &ftmstate);
 	FTM_DRV_InitPwm(INST_FLEXTIMER_PWM_1, &flexTimer_pwm_1_PwmConfig);
 }
@@ -103,7 +137,7 @@ status_t sweep(bool direction)
 	else
 	{
 		pwm_update_status=FTM_DRV_UpdatePwmChannel(INST_FLEXTIMER_PWM_1, flexTimer_pwm_1_IndependentChannelsConfig[0].hwChannelId
-						,FTM_PWM_UPDATE_IN_DUTY_CYCLE, 1638U, 0U, true);
+				,FTM_PWM_UPDATE_IN_DUTY_CYCLE, 1638U, 0U, true);
 	}
 	PINS_DRV_WritePin(LED_RED_PORT, LED_RED_PIN, pwm_update_status == STATUS_SUCCESS ? direction : 1U);
 	return pwm_update_status;

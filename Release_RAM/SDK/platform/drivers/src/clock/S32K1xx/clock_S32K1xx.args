@@ -3,8 +3,8 @@
 -DCPU_S32K144
 -I../SDK/platform/drivers/inc
 -I../SDK/platform/drivers/src/lpuart
--I../SDK/rtos/osif
 -I../SDK/platform/drivers/src/ftm
+-I../SDK/rtos/osif
 -I"C:/Users/Administrator/workspaceS32DS.3.5/Test/board"
 -I"C:/Users/Administrator/workspaceS32DS.3.5/Test/SDK/S32K144_SDK_4.0.1/platform/devices/common"
 -I"C:/Users/Administrator/workspaceS32DS.3.5/Test/SDK/S32K144_SDK_4.0.1/platform/devices"

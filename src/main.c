@@ -35,27 +35,30 @@ int main(void)
 	PINS_DRV_WritePin(LED_RED_PORT,LED_RED_PIN,1);
 	PINS_DRV_WritePin(LED_GREEN_PORT,LED_GREEN_PIN,1);
 	int dir=0;
+	uint8_t last_key=0,now_key=0;
 	for(;;)
     {
+
+		led();
 //		send();
 //		sg90();
-		if(count>5)
-		{
-			count=0;
-			PINS_DRV_TogglePins(LED_GREEN_PORT,1<<LED_GREEN_PIN);
-			sweep(dir);
-			dir=!dir;
-		}
+//		if(count>5)
+//		{
+//			count=0;
+//			PINS_DRV_TogglePins(LED_GREEN_PORT,1<<LED_GREEN_PIN);
+//			sweep(dir);
+//			dir=!dir;
+//		}
 
-//		if((PINS_DRV_ReadPins(KEY1_PORT) & (1U << KEY1_PIN)) == 0U)
-//		{
-//			PINS_DRV_WritePin(LED_BLUE_PORT,LED_BLUE_PIN,0);
-//
-//		}
-//		else
-//		{
-//			PINS_DRV_WritePin(LED_BLUE_PORT,LED_BLUE_PIN,1);
-//		}
+		if((PINS_DRV_ReadPins(KEY1_PORT) & (1U << KEY1_PIN)) == 0U)
+		{
+			PINS_DRV_WritePin(LED_BLUE_PORT,LED_BLUE_PIN,0);
+
+		}
+		else
+		{
+			PINS_DRV_WritePin(LED_BLUE_PORT,LED_BLUE_PIN,1);
+		}
 //		if((PINS_DRV_ReadPins(KEY2_PORT) & (1U << KEY2_PIN)) == 0U)
 //				{
 //					PINS_DRV_WritePin(LED_GREEN_PORT,LED_GREEN_PIN,0);
