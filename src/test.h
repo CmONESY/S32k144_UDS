@@ -15,10 +15,10 @@
 
 
 #define LIGHT1_PORT PTA
-#define LIGHT1_PORT PTD
-#define LIGHT1_PORT PTD
-#define LIGHT1_PORT PTD
-#define LIGHT1_PORT PTA
+#define LIGHT2_PORT PTD
+#define LIGHT3_PORT PTD
+#define LIGHT4_PORT PTD
+#define LIGHT5_PORT PTA
 
 #define LED_BLUE_PORT PTD
 #define LED_GREEN_PORT PTD
@@ -37,6 +37,7 @@ extern volatile status_t pwm_update_status;
 #define LED_GREEN_PIN 15U
 #define LED_RED_PIN 1U
 #define LED_YELLOW_PIN 0U
+extern uint16_t led_index;
 void led(void);
 void init(void);
 void lpit0(void);
