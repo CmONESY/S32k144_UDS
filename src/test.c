@@ -33,18 +33,36 @@ void show(uint16_t index)
 }
 void led(void)
 {
-	if((PINS_DRV_ReadPins(KEY5_PORT)&(1U<<KEY5_PIN))==0U)
+	static uint8_t key_last=0U,key_now=0U;
+	if((PINS_DRV_ReadPins(KEY5_PORT)&(1U<<KEY5_PIN))==0U) key_now=1U;
+	else key_now=0;
+	if((key_now == 1U) && (key_last == 0U))
 	{
-		while(((PINS_DRV_ReadPins(KEY5_PORT)&(1U<<KEY5_PIN))==0U));
+		if((PINS_DRV_ReadPins(KEY5_PORT)&(1<<KEY5_PIN)))
 		PINS_DRV_TogglePins(LED_GREEN_PORT, LED_GREEN_PIN);
 //		while((PINS_DRV_ReadPins(KEY5_PORT)&(1U<<KEY5_PIN))==0U);
 		static uint8_t dir=1;
 		show(led_index);
-		if(led_index<4) led_index++;
-		else led_index=0;
+		if(dir)
+		{
+			if(led_index<4) led_index++;
+			else
+			{
+				led_index--;
+				dir=!dir;
+			}
+		}
+		else
+		{
+			if(led_index>0) led_index--;
+			else
+			{
+				dir=!dir;
+				led_index++;
+			}
+		}
 	}
-
-
+	key_last=key_now;
 }
 /* 只点亮 idx 对应的那一盏，其余全灭 */
 //static void light_show(uint8_t idx)
