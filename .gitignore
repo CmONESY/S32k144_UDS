@@ -53,3 +53,16 @@ dkms.conf
 
 # debug information files
 *.dwo
+
+# ===== S32 Design Studio 自动生成 / 构建产物 =====
+# 每个源文件自动生成的 GCC 参数文件
+*.args
+# S32DS 自动生成的 Makefile 片段
+*.mk
+# 各构建配置的输出目录（.o/.d/.elf/.map/.args/.mk 全在里面）
+Debug_FLASH/
+Debug_RAM/
+Release_FLASH/
+Release_RAM/
+# IDE 配置目录
+.settings/
