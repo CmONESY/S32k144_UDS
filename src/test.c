@@ -14,11 +14,11 @@ ftm_state_t ftmstate;
 volatile uint16_t count=0;
 volatile status_t pwm_update_status=STATUS_SUCCESS;
 #define LIGHT_NUM   5U      /* light1 ~ light5 */
-#define LIGHT_ON    1U      /* �͵�ƽ����������Ǹߵ�ƽ��������������ֵ�Ե� */
+#define LIGHT_ON    1U      /* 锟酵碉拷平锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷歉叩锟狡斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟街碉拷缘锟� */
 #define LIGHT_OFF   0U
 uint16_t led_index=0;
 
-GPIO_Type * light_port[LIGHT_NUM]={LIGHT1_PORT,LIGHT2_PORT,LIGHT3_PORT,LIGHT4_PORT,LIGHT5_PORT};
+GPIO_Type * light_port[LIGHT_NUM]={light1_PORT,light2_PORT,light3_PORT,light4_PORT,light5_PORT};
 uint16_t light_pin[LIGHT_NUM]={light1_PIN,light2_PIN,light3_PIN,light4_PIN,light5_PIN};
 void show(uint16_t index)
 {
@@ -38,9 +38,7 @@ void led(void)
 	else key_now=0;
 	if((key_now == 1U) && (key_last == 0U))
 	{
-		if((PINS_DRV_ReadPins(KEY5_PORT)&(1<<KEY5_PIN)))
 		PINS_DRV_TogglePins(LED_GREEN_PORT, LED_GREEN_PIN);
-//		while((PINS_DRV_ReadPins(KEY5_PORT)&(1U<<KEY5_PIN))==0U);
 		static uint8_t dir=1;
 		show(led_index);
 		if(dir)
@@ -64,7 +62,7 @@ void led(void)
 	}
 	key_last=key_now;
 }
-/* ֻ���� idx ��Ӧ����һյ������ȫ�� */
+/* 只锟斤拷锟斤拷 idx 锟斤拷应锟斤拷锟斤拷一盏锟斤拷锟斤拷锟斤拷全锟斤拷 */
 //static void light_show(uint8_t idx)
 //{
 //	static GPIO_Type * const light_port[LIGHT_NUM] = {light1_PORT, light2_PORT, light3_PORT, light4_PORT, light5_PORT};
@@ -79,13 +77,13 @@ void led(void)
 //
 //void led(void)
 //{
-//	static uint8_t light_idx = LIGHT_NUM;   /* LIGHT_NUM ��ʾ��û��ƣ���һ�ΰ��´� light1 ��ʼ */
-//	static uint8_t key_last  = 1U;          /* ��һ�ΰ�����ƽ��1 = �ɿ� */
+//	static uint8_t light_idx = LIGHT_NUM;   /* LIGHT_NUM 锟斤拷示锟斤拷没锟斤拷疲锟斤拷锟揭伙拷伟锟斤拷麓锟� light1 锟斤拷始 */
+//	static uint8_t key_last  = 1U;          /* 锟斤拷一锟轿帮拷锟斤拷锟斤拷平锟斤拷1 = 锟缴匡拷 */
 //	uint8_t key_now = ((PINS_DRV_ReadPins(KEY5_PORT) & (1U << KEY5_PIN)) != 0U) ? 1U : 0U;
 //
-//	if((key_last != 0U) && (key_now == 0U))  /* �½��أ���һ�� */
+//	if((key_last != 0U) && (key_now == 0U))  /* 锟铰斤拷锟截ｏ拷锟斤拷一锟斤拷 */
 //	{
-//		light_idx = (light_idx >= (LIGHT_NUM - 1U)) ? 0U : (uint8_t)(light_idx + 1U);  /* ����ٻص� light1 */
+//		light_idx = (light_idx >= (LIGHT_NUM - 1U)) ? 0U : (uint8_t)(light_idx + 1U);  /* 锟斤拷锟斤拷倩氐锟� light1 */
 //		light_show(light_idx);
 //	}
 //

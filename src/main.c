@@ -30,12 +30,14 @@ int main(void)
 	lpit_init();
 	lpuart_init();
 	pwm_init();
+	OLED_Init();
 	PINS_DRV_WritePin(LED_YELLOW_PORT,LED_YELLOW_PIN,1);
 	PINS_DRV_WritePin(LED_BLUE_PORT,LED_BLUE_PIN,1);
 	PINS_DRV_WritePin(LED_RED_PORT,LED_RED_PIN,1);
 	PINS_DRV_WritePin(LED_GREEN_PORT,LED_GREEN_PIN,1);
 	int dir=0;
-	uint8_t last_key=0,now_key=0;
+	unsigned char str='FUCK';
+	uint8_t key_last=0U,key_now=0U;
 	for(;;)
     {
 
@@ -49,16 +51,18 @@ int main(void)
 //			sweep(dir);
 //			dir=!dir;
 //		}
-
-		if((PINS_DRV_ReadPins(KEY1_PORT) & (1U << KEY1_PIN)) == 0U)
+		if((PINS_DRV_ReadPins(KEY1_PORT) & (1U << KEY1_PIN)) == 0U) key_now=1U;
+		else key_now=1U;
+		static uint32_t index=0;
+		if((key_last==0U)&&(key_now==1U))
 		{
-			PINS_DRV_WritePin(LED_BLUE_PORT,LED_BLUE_PIN,0);
-
+			index++;
+			PINS_DRV_TogglePins(LED_RED_PORT, LED_RED_PIN);
+			OLED_Clear();
+			OLED_ShowNum(3, 4, index, 2);
+			OLED_Update();
 		}
-		else
-		{
-			PINS_DRV_WritePin(LED_BLUE_PORT,LED_BLUE_PIN,1);
-		}
+		key_last=key_now;
 //		if((PINS_DRV_ReadPins(KEY2_PORT) & (1U << KEY2_PIN)) == 0U)
 //				{
 //					PINS_DRV_WritePin(LED_GREEN_PORT,LED_GREEN_PIN,0);

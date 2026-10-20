@@ -18,10 +18,12 @@ pin_labels:
 - {pin_num: '4', pin_signal: PTD0, label: LED_YELLOW}
 - {pin_num: '3', pin_signal: PTD1, label: LED_RED}
 - {pin_num: '79', pin_signal: PTA0, label: light5, identifier: LED_BLUE;light;light5}
-- {pin_num: '69', pin_signal: PTD4, label: light4, identifier: light4}
-- {pin_num: '70', pin_signal: PTD3, label: light3, identifier: light3}
-- {pin_num: '72', pin_signal: PTA3, label: light1, identifier: light1}
+- {pin_num: '69', pin_signal: PTD4, label: light3, identifier: light4;light3}
+- {pin_num: '70', pin_signal: PTD3, label: light1, identifier: light3;light1}
+- {pin_num: '72', pin_signal: PTA3, label: scl, identifier: light1;scl}
 - {pin_num: '71', pin_signal: PTD2, label: light2, identifier: light2}
+- {pin_num: '73', pin_signal: PTA2, label: sda, identifier: sda}
+- {pin_num: '68', pin_signal: PTB12, label: light4, identifier: light4}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -70,10 +72,12 @@ BOARD_InitPins:
   - {pin_num: '29', peripheral: LPUART0, signal: txd, pin_signal: PTC3, direction: OUTPUT}
   - {pin_num: '67', peripheral: FTM0, signal: 'ch, 1', pin_signal: PTB13, direction: OUTPUT}
   - {pin_num: '79', peripheral: PORTA, signal: 'port, 0', pin_signal: PTA0, identifier: light5, direction: OUTPUT, PS: state_0, initValue: state_0}
-  - {pin_num: '69', peripheral: PORTD, signal: 'port, 4', pin_signal: PTD4, direction: OUTPUT}
-  - {pin_num: '70', peripheral: PORTD, signal: 'port, 3', pin_signal: PTD3, direction: OUTPUT, PFE: no_init}
+  - {pin_num: '69', peripheral: PORTD, signal: 'port, 4', pin_signal: PTD4, identifier: light3, direction: OUTPUT}
+  - {pin_num: '70', peripheral: PORTD, signal: 'port, 3', pin_signal: PTD3, identifier: light1, direction: OUTPUT, PFE: no_init}
   - {pin_num: '71', peripheral: PORTD, signal: 'port, 2', pin_signal: PTD2, direction: OUTPUT}
-  - {pin_num: '72', peripheral: PORTA, signal: 'port, 3', pin_signal: PTA3, direction: OUTPUT}
+  - {pin_num: '72', peripheral: LPI2C0, signal: 'scl, scl', pin_signal: PTA3, identifier: scl}
+  - {pin_num: '73', peripheral: LPI2C0, signal: 'sda, sda', pin_signal: PTA2}
+  - {pin_num: '68', peripheral: PORTB, signal: 'port, 12', pin_signal: PTB12, direction: OUTPUT}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -110,18 +114,29 @@ pin_settings_config_t g_pin_mux_InitConfigArr0[NUM_OF_CONFIGURED_PINS0] = {
     },
     {
         .base            = PORTA,
+        .pinPortIdx      = 2U,
+        .pullConfig      = PORT_INTERNAL_PULL_NOT_ENABLED,
+        .driveSelect     = PORT_LOW_DRIVE_STRENGTH,
+        .passiveFilter   = false,
+        .mux             = PORT_MUX_ALT3,
+        .pinLock         = false,
+        .intConfig       = PORT_DMA_INT_DISABLED,
+        .clearIntFlag    = false,
+        .gpioBase        = NULL,
+        .digitalFilter   = false,
+    },
+    {
+        .base            = PORTA,
         .pinPortIdx      = 3U,
         .pullConfig      = PORT_INTERNAL_PULL_NOT_ENABLED,
         .driveSelect     = PORT_LOW_DRIVE_STRENGTH,
         .passiveFilter   = false,
-        .mux             = PORT_MUX_AS_GPIO,
+        .mux             = PORT_MUX_ALT3,
         .pinLock         = false,
         .intConfig       = PORT_DMA_INT_DISABLED,
         .clearIntFlag    = false,
-        .gpioBase        = PTA,
-        .direction       = GPIO_OUTPUT_DIRECTION,
+        .gpioBase        = NULL,
         .digitalFilter   = false,
-        .initValue       = 0U,
     },
     {
         .base            = PORTA,
@@ -135,6 +150,21 @@ pin_settings_config_t g_pin_mux_InitConfigArr0[NUM_OF_CONFIGURED_PINS0] = {
         .clearIntFlag    = false,
         .gpioBase        = NULL,
         .digitalFilter   = false,
+    },
+    {
+        .base            = PORTB,
+        .pinPortIdx      = 12U,
+        .pullConfig      = PORT_INTERNAL_PULL_NOT_ENABLED,
+        .driveSelect     = PORT_LOW_DRIVE_STRENGTH,
+        .passiveFilter   = false,
+        .mux             = PORT_MUX_AS_GPIO,
+        .pinLock         = false,
+        .intConfig       = PORT_DMA_INT_DISABLED,
+        .clearIntFlag    = false,
+        .gpioBase        = PTB,
+        .direction       = GPIO_OUTPUT_DIRECTION,
+        .digitalFilter   = false,
+        .initValue       = 0U,
     },
     {
         .base            = PORTB,

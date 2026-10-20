@@ -36,10 +36,12 @@
                <pin_label pin_num="4" pin_signal="PTD0" label="LED_YELLOW"/>
                <pin_label pin_num="3" pin_signal="PTD1" label="LED_RED"/>
                <pin_label pin_num="79" pin_signal="PTA0" label="light5" identifier="LED_BLUE;light;light5"/>
-               <pin_label pin_num="69" pin_signal="PTD4" label="light4" identifier="light4"/>
-               <pin_label pin_num="70" pin_signal="PTD3" label="light3" identifier="light3"/>
-               <pin_label pin_num="72" pin_signal="PTA3" label="light1" identifier="light1"/>
+               <pin_label pin_num="69" pin_signal="PTD4" label="light3" identifier="light4;light3"/>
+               <pin_label pin_num="70" pin_signal="PTD3" label="light1" identifier="light3;light1"/>
+               <pin_label pin_num="72" pin_signal="PTA3" label="scl" identifier="light1;scl"/>
                <pin_label pin_num="71" pin_signal="PTD2" label="light2" identifier="light2"/>
+               <pin_label pin_num="73" pin_signal="PTA2" label="sda" identifier="sda"/>
+               <pin_label pin_num="68" pin_signal="PTB12" label="light4" identifier="light4"/>
             </pin_labels>
          </pins_profile>
          <functions_list>
@@ -158,11 +160,13 @@
                   </pin>
                   <pin peripheral="PORTD" signal="port, 4" pin_num="69" pin_signal="PTD4">
                      <pin_features>
+                        <pin_feature name="identifier" value="light3"/>
                         <pin_feature name="direction" value="OUTPUT"/>
                      </pin_features>
                   </pin>
                   <pin peripheral="PORTD" signal="port, 3" pin_num="70" pin_signal="PTD3">
                      <pin_features>
+                        <pin_feature name="identifier" value="light1"/>
                         <pin_feature name="direction" value="OUTPUT"/>
                         <pin_feature name="PFE" value="no_init"/>
                      </pin_features>
@@ -172,7 +176,13 @@
                         <pin_feature name="direction" value="OUTPUT"/>
                      </pin_features>
                   </pin>
-                  <pin peripheral="PORTA" signal="port, 3" pin_num="72" pin_signal="PTA3">
+                  <pin peripheral="LPI2C0" signal="scl, scl" pin_num="72" pin_signal="PTA3">
+                     <pin_features>
+                        <pin_feature name="identifier" value="scl"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="LPI2C0" signal="sda, sda" pin_num="73" pin_signal="PTA2"/>
+                  <pin peripheral="PORTB" signal="port, 12" pin_num="68" pin_signal="PTB12">
                      <pin_features>
                         <pin_feature name="direction" value="OUTPUT"/>
                      </pin_features>

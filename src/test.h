@@ -14,24 +14,12 @@
 #define KEY5_PIN 14U
 
 
-#define LIGHT1_PORT PTA
-#define LIGHT2_PORT PTD
-#define LIGHT3_PORT PTD
-#define LIGHT4_PORT PTD
-#define LIGHT5_PORT PTA
-
 #define LED_BLUE_PORT PTD
 #define LED_GREEN_PORT PTD
 #define LED_RED_PORT PTD
 #define LED_YELLOW_PORT PTD
 extern volatile uint16_t count;
 extern volatile status_t pwm_update_status;
-
-#define LIGHIT1_PIN 3U
-#define LIGHIT2_PIN 2U
-#define LIGHIT3_PIN 3U
-#define LIGHIT4_PIN 4U
-#define LIGHIT5_PIN 0U
 
 #define LED_BLUE_PIN 16U
 #define LED_GREEN_PIN 15U
